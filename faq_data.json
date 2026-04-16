@@ -1,0 +1,22 @@
+{
+  "faqs": [
+    {
+      "id": "faq_001",
+      "question": "What is OER?",
+      "keywords": ["what is oer", "definition", "meaning"],
+      "answer": "Open Educational Resources (OER) are teaching and learning materials that are freely available and carry legal permission for open use, adaptation, and redistribution."
+    },
+    {
+      "id": "faq_002",
+      "question": "How does the scoring work?",
+      "keywords": ["scoring", "grading", "rubric", "evaluation"],
+      "answer": "Our AI evaluates resources using the GGC Quality Rubric, scoring from 1 to 5 based on Relevance, Accuracy, Clarity, Completeness, and Accessibility."
+    },
+    {
+      "id": "faq_003",
+      "question": "Are these resources free?",
+      "keywords": ["free", "cost", "license", "payment"],
+      "answer": "Yes. All resources retrieved by this agent are either in the Public Domain or carry a Creative Commons license (like CC BY), meaning they are provided at no cost to students."
+    }
+  ]
+}

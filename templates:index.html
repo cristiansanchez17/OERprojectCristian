@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OER Recommendation System</title>
+</head>
+<body>
+
+<h1>OER Finder</h1>
+
+<form method="POST">
+    <input type="text" name="query" placeholder="Enter course (ENGL 1101)">
+    <button type="submit">Search</button>
+</form>
+
+{% if results %}
+    <h2>Results for "{{ query }}"</h2>
+
+    <ul>
+    {% for oer in results %}
+        <li>
+            <h3>{{ oer.title }}</h3>
+            <p>{{ oer.summary }}</p>
+            <a href="{{ oer.link }}" target="_blank">View Resource</a>
+
+            <p><strong>Average Score:</strong> {{ oer.avg_score }}</p>
+        </li>
+    {% endfor %}
+    </ul>
+{% endif %}
+
+</body>
+</html>

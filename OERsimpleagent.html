@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>OER AI Agent Prototype</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+    }
+    .input-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    input {
+      flex: 1;
+      padding: 10px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .card {
+      background: white;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .scores {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>OER AI Agent Prototype</h1>
+
+  <div class="input-group">
+    <input id="query" type="text" placeholder="Enter course (e.g., Introduction to Biology)">
+    <button onclick="runAgent()">Run Agent</button>
+  </div>
+
+  <div id="results"></div>
+</div>
+
+<script>
+async function runAgent() {
+  const query = document.getElementById("query").value;
+  const resultsDiv = document.getElementById("results");
+
+  resultsDiv.innerHTML = "<p>Loading...</p>";
+
+  try {
+    const response = await fetch(`http://127.0.0.1:5000/oer?query=${query}`);
+    const data = await response.json();
+
+    resultsDiv.innerHTML = "";
+
+    data.forEach(item => {
+      const card = document.createElement("div");
+      card.className = "card";
+
+      card.innerHTML = `
+        <h2>${item.title}</h2>
+        <a href="${item.link}" target="_blank">${item.link}</a>
+        <div class="scores">
+          <p>Relevance: ${item.scores.Relevance}</p>
+          <p>Accuracy: ${item.scores.Accuracy}</p>
+          <p>Clarity: ${item.scores.Clarity}</p>
+          <p>Completeness: ${item.scores.Completeness}</p>
+          <p>Accessibility: ${item.scores.Accessibility}</p>
+          <p><strong>Overall: ${item.avg_score}</strong></p>
+        </div>
+      `;
+
+      resultsDiv.appendChild(card);
+    });
+
+  } catch (error) {
+    resultsDiv.innerHTML = "<p>Error loading results. Make sure backend is running.</p>";
+    console.error(error);
+  }
+}
+</script>
+
+</body>
+</html>

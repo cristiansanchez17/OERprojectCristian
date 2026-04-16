@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>OER AI Agent Prototype</title>
+  <style>
+    #chat-container {
+        max-width: 600px;
+        margin: 20px auto;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        height: 500px;
+        background: #f9f9f9;
+    }
+    #chat-history {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .message {
+        padding: 10px 15px;
+        border-radius: 15px;
+        max-width: 80%;
+        word-wrap: break-word;
+    }
+    .user-msg {
+        align-self: flex-end;
+        background: #007bff;
+        color: white;
+    }
+    .agent-msg {
+        align-self: flex-start;
+        background: #e9e9eb;
+        color: black;
+    }
+    .input-area {
+        display: flex;
+        padding: 10px;
+        border-top: 1px solid #ddd;
+    }
+    #query { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+    #send-btn { margin-left: 10px; padding: 10px 20px; cursor: pointer; }
+</style>
+
+<body>
+    <div id="chat-container">
+        <div id="chat-history">
+            <div class="message agent-msg">Hello! I'm your OER Agent. Ask me a question or provide a course code.</div>
+        </div>
+        
+        <div class="input-area">
+            <input type="text" id="query" placeholder="Type here...">
+            <button id="send-btn" onclick="runAgent()">Send</button>
+        </div>
+    </div>
+
+    <script>
+    function addMessage(text, sender) {
+        const history = document.getElementById("chat-history");
+        const msgDiv = document.createElement("div");
+        msgDiv.className = `message ${sender === 'user' ? 'user-msg' : 'agent-msg'}`;
+        msgDiv.innerHTML = text;
+        history.appendChild(msgDiv);
+        history.scrollTop = history.scrollHeight; // Auto-scroll to bottom
+    }
+
+    async function runAgent() {
+        const queryInput = document.getElementById("query");
+        const queryText = queryInput.value.trim();
+        if (!queryText) return;
+
+        // 1. Show User Message
+        addMessage(queryText, 'user');
+        queryInput.value = ""; // Clear input box
+
+        try {
+            const response = await fetch(`http://127.0.0.1:5000/oer?query=${encodeURIComponent(queryText)}`);
+            const data = await response.json();
+
+            // 2. Handle Response
+            if (data.type === "faq") {
+                addMessage(`<strong>FAQ:</strong> ${data.answer}`, 'agent');
+            } else if (data.type === "search" && data.results.length > 0) {
+        let resultsList = "<strong>Top OER Recommendations:</strong><br><br>";
+        
+        data.results.forEach(book => {
+    const s = book.scores || {};
+    // Use 10 as default for your verified links
+    const rel = s.Relevance || 10;
+    const acc = s.Accuracy || 10;
+    const cla = s.Clarity || 10;
+    const com = s.Completeness || 10;
+    const acs = s.Accessibility || 10;
+    
+    // The sum of all categories
+    const totalScore = rel + acc + cla + com + acs;
+
+    resultsList += `
+        <div class="oer-card" style="border-left: 4px solid #28a745; padding: 10px; margin-bottom: 15px; background: #fff; border-radius: 4px; color: #333;">
+            <span style="font-size: 1.2em; font-weight: bold; color: #28a745;">[${totalScore}/50]</span> 
+            <strong style="font-size: 1.1em;">${book.title}</strong><br>
+            
+            <div style="font-size: 0.85em; margin: 5px 0; color: #666;">
+                <strong>Category Scores (Max 10):</strong> <br>
+                Rel: ${rel} | Acc: ${acc} | Cla: ${cla} | Comp: ${com} | Access: ${acs}
+            </div>
+            
+            <p style="margin: 5px 0; font-size: 0.9em;">${book.summary}</p>
+            <a href="${book.link}" target="_blank" style="color: #007bff; font-weight: bold;">View Resource ➔</a>
+        </div>`;
+});
+        
+        addMessage(resultsList, 'agent');
+            } else {
+                addMessage("I'm sorry, I couldn't find a matching FAQ or textbook.", 'agent');
+            }
+        } catch (error) {
+            addMessage("Error: Could not connect to the backend server.", 'agent');
+        }
+    }
+
+    // Allow "Enter" key to send
+    document.getElementById("query").addEventListener("keypress", (e) => {
+        if (e.key === "Enter") runAgent();
+    });
+    </script>
+</body>
+</html>
