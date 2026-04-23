@@ -1,0 +1,150 @@
+{
+    "ENGL 1101": [
+        {
+            "title": "RG-007: No-Cost Truncated Course for ENGL 1101",
+            "url": "https://alg.manifoldapp.org/projects/rg-007",
+            "summary": "Complete course framework.",
+            "scores": {
+                "Relevance": 10,
+                "Accuracy": 10,
+                "Clarity": 10,
+                "Completeness": 10,
+                "Accessibility": 10
+            }
+        },
+        {
+            "title": "Writing Guide with Handbook - OpenStax",
+            "url": "https://openstax.org/details/books/writing-guide",
+            "summary": "National standard textbook.",
+            "scores": {
+                "Relevance": 8,
+                "Accuracy": 10,
+                "Clarity": 10,
+                "Completeness": 9,
+                "Accessibility": 10
+            }
+        },
+        {
+            "title": "Successful College Writing (ENGL 1101)",
+            "url": "https://oer.galileo.usg.edu/english-textbooks/15/",
+            "summary": "PDF-based USG textbook.",
+            "scores": {
+                "Relevance": 10,
+                "Accuracy": 10,
+                "Clarity": 7,
+                "Completeness": 8,
+                "Accessibility": 10
+            }
+        }
+    ],
+    "MATH 1111": [
+        {
+            "title": "College Algebra Open Course (MATH 1111)",
+            "url": "https://alg.manifoldapp.org/projects/college-algebra-open-course-math-1111",
+            "summary": "Full algebra course sets.",
+            "scores": {
+                "Relevance": 10,
+                "Accuracy": 10,
+                "Clarity": 9,
+                "Completeness": 10,
+                "Accessibility": 10
+            }
+        },
+        {
+            "title": "College Algebra Textbook",
+            "url": "https://oer.galileo.usg.edu/mathematics-textbooks/21/",
+            "summary": "Standard PDF textbook.",
+            "scores": {
+                "Relevance": 8,
+                "Accuracy": 10,
+                "Clarity": 7,
+                "Completeness": 8,
+                "Accessibility": 10
+            }
+        }
+    ],
+    "ENGL 1102": [
+        {
+            "title": "English Composition II (ENGL 1102)",
+            "url": "https://oer.galileo.usg.edu/english-textbooks/23/",
+            "summary": "Sequential textbook for Comp II.",
+            "scores": {
+                "Relevance": 10,
+                "Accuracy": 10,
+                "Clarity": 7,
+                "Completeness": 8,
+                "Accessibility": 10
+            }
+        }
+    ],
+    "HIST 2111": [
+        {
+            "title": "History of the United States I (HIST 2111)",
+            "url": "https://oer.galileo.usg.edu/history-textbooks/5/",
+            "summary": "Standard US History PDF.",
+            "scores": {
+                "Relevance": 10,
+                "Accuracy": 10,
+                "Clarity": 7,
+                "Completeness": 7,
+                "Accessibility": 10
+            }
+        }
+    ],
+    "HIST 2112": [
+        {
+            "title": "History of the United States II (HIST 2112)",
+            "url": "https://oer.galileo.usg.edu/history-ancillary/10/",
+            "summary": "Supplementary history materials.",
+            "scores": {
+                "Relevance": 10,
+                "Accuracy": 10,
+                "Clarity": 7,
+                "Completeness": 5,
+                "Accessibility": 10
+            }
+        }
+    ],
+    "BIOL 1101K": [
+        {
+            "title": "Introduction to Biology (BIOL 1101K)",
+            "url": "https://oer.galileo.usg.edu/biology-textbooks/17/",
+            "summary": "Lab-heavy course material.",
+            "scores": {
+                "Relevance": 10,
+                "Accuracy": 10,
+                "Clarity": 7,
+                "Completeness": 8,
+                "Accessibility": 10
+            }
+        }
+    ],
+    "ITEC 1001": [
+        {
+            "title": "Introduction to Computer Science (ITEC 1001)",
+            "url": "https://openstax.org/details/books/introduction-computer-science",
+            "summary": "A comprehensive OpenStax resource covering programming, hardware, and algorithms.",
+            "scores": {
+                "Relevance": 9,
+                "Accuracy": 10,
+                "Clarity": 10,
+                "Completeness": 10,
+                "Accessibility": 10
+            }
+        }
+    ],
+    "ITEC 4700": [
+        {
+            "title": "Artificial Intelligence Curated Materials",
+            "url": "https://alg.manifoldapp.org/projects/csci7130-gasouthern",
+            "summary": "The course outcomes are associated with the bolded Integrative Educational Experience (IEE) Goals.  ...",
+            "scores": {
+                "Relevance": 8,
+                "Accuracy": 10,
+                "Clarity": 9,
+                "Completeness": 9,
+                "Accessibility": 9
+            }
+        }
+    ]
+}
