@@ -66,7 +66,7 @@
     <div id="chat-container">
         <div id="chat-history">
             <div class="message agent-msg">Hello! I'm your OER Agent. How can I help you today?
-    You can search for a course code (e.g., ITEC 1001), say "I want to submit a request," or type <strong>"question"</strong> to ask a question."</div>
+    You can search for a course code (e.g., ITEC 1001), say "I want to submit a request," or type <strong>"question"</strong> to ask a question.</div>
         </div>
 
         <div class="input-area">
@@ -80,7 +80,7 @@
         const history = document.getElementById("chat-history");
         const msgDiv = document.createElement("div");
         msgDiv.className = `message ${sender === 'user' ? 'user-msg' : 'agent-msg'}`;
-        msgDiv.innerHTML = text; // innerHTML allows us to render <br> and <strong> from the agent
+        msgDiv.innerHTML = text;
         history.appendChild(msgDiv);
         history.scrollTop = history.scrollHeight;
     }
@@ -91,21 +91,30 @@
 
         if (!queryText) return;
 
-        // 1. Show User Message and Clear Input
         addMessage(queryText, 'user');
         queryInput.value = "";
 
         try {
-            // FIX: Using encodeURIComponent prevents SyntaxErrors when sentences have spaces
             const response = await fetch(`http://127.0.0.1:5000/oer?query=${encodeURIComponent(queryText)}`);
             if (!response.ok) throw new Error("Backend not responding");
 
             const data = await response.json();
 
-            // 2. Handle Responses (FAQ, Workflow, or Search Results)
             if (data.type === "faq" || data.type === "workflow") {
                 addMessage(data.answer, 'agent');
             }
+            /*
+             * BUG FIX: Original checked data.results but _format_search_response()
+             * was returning {"type":"search", "answer": html_string} — no "results"
+             * array at all. So this branch NEVER executed and every course code
+             * search hit the fallback "couldn't find a resource" message instead.
+             *
+             * The backend now returns {"type":"search", "results": [...]} correctly.
+             *
+             * BUG FIX: book.link was used below but the JSON data stores the URL
+             * under the key "url", not "link". The backend now remaps url -> link
+             * before sending, so this frontend code is correct as-is.
+             */
             else if (data.type === "search" && data.results && data.results.length > 0) {
                 let resultsList = "<strong>Top OER Recommendations:</strong><br>";
 
@@ -124,7 +133,7 @@
                 addMessage(resultsList, 'agent');
             }
             else {
-                addMessage("I'm sorry, I couldn't find a matching resource or understand that request.", 'agent');
+                addMessage("I'm sorry, I couldn't find a matching resource. Try a course code like <strong>ENGL 1101</strong>.", 'agent');
             }
         } catch (error) {
             console.error("Fetch error:", error);
@@ -132,7 +141,6 @@
         }
     }
 
-    // Enter Key Support
     document.getElementById("query").addEventListener("keypress", (e) => {
         if (e.key === "Enter") runAgent();
     });
